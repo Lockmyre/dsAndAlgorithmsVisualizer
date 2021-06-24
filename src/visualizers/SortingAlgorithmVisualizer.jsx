@@ -1,6 +1,7 @@
 import React from 'react';
+import '../styles/SortingAlgorithmVisualizer.css';
 
-export default class SortingAlgorithmsVisualizer extends React.Component {
+export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -19,18 +20,22 @@ export default class SortingAlgorithmsVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray();
+		this.resetSortingArray(5);
 	}
 
 	render() {
-		const {sortingArray} = this.state.sortingArray;
+		const {sortingArray} = this.state;
 
 		return (
-			{sortingArray.map((value, id) => (
-				<div className="arrayElementBar" key={id}>
-					{value}
-				</div>
-			))}
+			<div className="arrayElementContainer">
+				{sortingArray.map((value, index) => (
+					<div 
+					className="arrayElementBar" 
+					key={index}
+					style={{height: value}}>
+					</div>
+				))}
+			</div>
 		);
 	}
 }

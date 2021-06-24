@@ -1,0 +1,11 @@
+.arrayElementBar {
+	width: 5px;
+	background-color: darkred;
+	display: inline-block;
+	margin: 0 5px;
+}
+
+.arrayElementContainer {
+	width: 50%;
+	margin: 0 auto;
+}
