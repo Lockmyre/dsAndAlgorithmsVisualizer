@@ -13,14 +13,14 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	resetSortingArray(arrayLength) {
 		const sortingArray = [];
 		for (let i = 0; i < arrayLength; i++) {
-			sortingArray.push(randomInteger(5, 1001));
+			sortingArray.push(randomInteger(5, 701));
 		}
 
 		this.setState({sortingArray});
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(5);
+		this.resetSortingArray(200);
 	}
 
 	render() {
