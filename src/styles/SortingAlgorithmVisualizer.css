@@ -9,14 +9,64 @@
 .arrayElementContainer {
 	position: absolute;
 	bottom: 0;
-	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;	
+}
+
+.sortingAlgorithmButton {
+	transition: 0.3s;
+	font-size: 24px;
+	color: white;
+	height: 70px;
+	width: 170px;
+	background-color: #2196F3;
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: #2196F3;
+	cursor: pointer;
+	margin: 18px 5px;
+}
+
+.sortingAlgorithmButton:hover {
+	color: #2196F3;
+	background-color: white;
+}
+
+.sortingButtonContainer {
+	margin-left: 35%;
+}
+
+.verticalBar {
+	width: 1px;
+	height: 100%;
+	margin-left: -10px;
+	display: inline-block;
+	position: absolute;
+	background: #2196F3;
+}
+
+.sortButton {
+	cursor: pointer;
+	display: inline-block;
+	position: absolute;
+	margin-left: 4%;
+	background-color: #4F4789;
+	color: white;
+	top: 30%;
+	height: 40%;
+	width: 6%;
+	border-radius: 10px;
+	border-width: 1px;
+	border-color: #2196F3;
+}
+
+.sortingAlgorithmHeader {
+	display: block;
+	position: fixed;
+	z-index: 2;
+	top: 0;
 	width: 100%;
-	
-}
+	background: linear-gradient(90deg, rgba(126,146,223,1) 0%, rgba(92,118,208,1) 48%, rgba(71,99,204,1) 83%);
 
-
-/*.arrayElementContainer {
-	width: 50%;
-	margin: 0 auto;
 }
-*/

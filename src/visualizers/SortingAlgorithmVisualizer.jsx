@@ -20,21 +20,65 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(200);
+		this.resetSortingArray(150);
 	}
 
 	render() {
 		const {sortingArray} = this.state;
 
 		return (
-			<div className="arrayElementContainer">
-				{sortingArray.map((value, index) => (
-					<div 
-					className="arrayElementBar" 
-					key={index}
-					style={{height: value}}>
-					</div>
-				))}
+			<body>
+				<SortingAlgorithmHeader />
+				<div className="arrayElementContainer">
+					{sortingArray.map((value, index) => (
+						<div 
+						className="arrayElementBar" 
+						key={index}
+						style={{height: value}}>
+						</div>
+					))}
+				</div>
+			</body>
+		);
+	}
+}
+
+function SortingAlgorithmButton(props) {
+	return (
+		<button className="sortingAlgorithmButton">
+			{props.value}
+		</button>
+	);
+}
+
+function SortButton() {
+	return (
+		<button className="sortButton">
+		Click to sort 
+		</button>
+	);
+}
+
+class SortingAlgorithmHeader extends React.Component {
+	renderButton(text) {
+		return (
+			<SortingAlgorithmButton
+			 	value={text}
+			/>
+		);
+	}
+
+	render() {
+		return (
+			<div className="sortingAlgorithmHeader">
+				<div className="sortingButtonContainer">
+					<div className="verticalBar"></div>
+					{this.renderButton("Selection Sort")} 
+					{this.renderButton("Insertion Sort")}
+					{this.renderButton("Merge Sort")}
+					{this.renderButton("Quicksort")}
+					<SortButton />
+				</div>
 			</div>
 		);
 	}
