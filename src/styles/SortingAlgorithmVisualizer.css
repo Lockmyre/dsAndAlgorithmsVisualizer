@@ -14,7 +14,7 @@
 	width: 100%;	
 }
 
-.sortingAlgorithmButton {
+.currentSortingAlgorithmButton {
 	transition: 0.3s;
 	font-size: 24px;
 	color: white;
@@ -28,19 +28,44 @@
 	margin: 18px 5px;
 }
 
-.sortingAlgorithmButton:hover {
+.sortingAlgorithmButton {
+	transition: 0.3s;
+	font-size: 24px;
 	color: #2196F3;
+	height: 70px;
+	width: 170px;
 	background-color: white;
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: #2196F3;
+	cursor: pointer;
+	margin: 18px 5px;
+}
+
+.sortingAlgorithmButton:hover {
+	color: white;
+	background-color: #2196F3;
 }
 
 .sortingButtonContainer {
 	margin-left: 35%;
 }
 
-.verticalBar {
+#separator1 {
 	width: 1px;
-	height: 100%;
-	margin-left: -10px;
+	height: 80%;
+	top: 10%;
+	margin-left: -2%;
+	display: inline-block;
+	position: absolute;
+	background: #2196F3;
+}
+
+#separator2 {
+	width: 1px;
+	height: 80%;
+	top: 10%;
+	margin-left: 2%;
 	display: inline-block;
 	position: absolute;
 	background: #2196F3;

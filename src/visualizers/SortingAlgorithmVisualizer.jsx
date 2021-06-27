@@ -43,12 +43,34 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 }
 
+/*
 function SortingAlgorithmButton(props) {
 	return (
-		<button className="sortingAlgorithmButton">
+		<button className={"sortingAlgorithmButton"}>
 			{props.value}
 		</button>
 	);
+}
+*/
+
+class SortingAlgorithmButton extends React.Component {
+	state = {selected: false}
+
+	handleClick = () => {
+		this.setState({
+			selected: !this.state.selected
+		})
+	}
+
+	render() {
+		return (
+			<button 
+			className={this.state.selected ? "currentSortingAlgorithmButton" : "sortingAlgorithmButton"}
+			onClick={() => this.handleClick()}>
+			{this.props.value}
+			</button>
+		);
+	}
 }
 
 function SortButton() {
@@ -64,6 +86,7 @@ class SortingAlgorithmHeader extends React.Component {
 		return (
 			<SortingAlgorithmButton
 			 	value={text}
+			 	handleClick={this.handleClick}
 			/>
 		);
 	}
@@ -72,11 +95,12 @@ class SortingAlgorithmHeader extends React.Component {
 		return (
 			<div className="sortingAlgorithmHeader">
 				<div className="sortingButtonContainer">
-					<div className="verticalBar"></div>
+					<span id="separator1"></span>
 					{this.renderButton("Selection Sort")} 
 					{this.renderButton("Insertion Sort")}
 					{this.renderButton("Merge Sort")}
 					{this.renderButton("Quicksort")}
+					<span id="separator2"></span>
 					<SortButton />
 				</div>
 			</div>
