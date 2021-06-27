@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/SortingAlgorithmVisualizer.css';
 
+var currentButton = null;
+
 export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -43,20 +45,23 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 }
 
-/*
-function SortingAlgorithmButton(props) {
+function SortButton() {
 	return (
-		<button className={"sortingAlgorithmButton"}>
-			{props.value}
+		<button className="sortButton">
+		Click to sort 
 		</button>
 	);
 }
-*/
 
 class SortingAlgorithmButton extends React.Component {
 	state = {selected: false}
 
 	handleClick = () => {
+		if (currentButton != null) {
+			currentButton.setState({selected: false})
+		}
+
+		currentButton = this;
 		this.setState({
 			selected: !this.state.selected
 		})
@@ -73,20 +78,11 @@ class SortingAlgorithmButton extends React.Component {
 	}
 }
 
-function SortButton() {
-	return (
-		<button className="sortButton">
-		Click to sort 
-		</button>
-	);
-}
-
 class SortingAlgorithmHeader extends React.Component {
 	renderButton(text) {
 		return (
 			<SortingAlgorithmButton
-			 	value={text}
-			 	handleClick={this.handleClick}
+				value={text}
 			/>
 		);
 	}
