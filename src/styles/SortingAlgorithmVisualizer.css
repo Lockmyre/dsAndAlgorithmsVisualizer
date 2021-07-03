@@ -1,7 +1,7 @@
 .arrayElementBar {
 	width: 5px;
 	/*background: linear-gradient(to bottom, gold 0%, gold 5%, black 5%, black 100%); */
-	background-color: gray;
+	background-color: turquoise;
 	display: inline-block;
 	margin: 0 2px;
 }
