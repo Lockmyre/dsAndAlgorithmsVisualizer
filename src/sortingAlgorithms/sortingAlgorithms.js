@@ -21,12 +21,12 @@ function merge(array, tempArray, first, mid, end, animationArray) {
 		const animation = {};
 		animation.comparison = [beginHalf1, beginHalf2];
 		if (tempArray[beginHalf1] <= tempArray[beginHalf2]) {
+			animation.swap = [current, tempArray[beginHalf1]];
 			array[current] = tempArray[beginHalf1];
-			animation.swap = [current, beginHalf1];
 			beginHalf1++;
 		} else {
+			animation.swap = [current, tempArray[beginHalf2]];
 			array[current] = tempArray[beginHalf2];
-			animation.swap = [current, beginHalf2];
 			beginHalf2++;
 		}
 
@@ -38,9 +38,9 @@ function merge(array, tempArray, first, mid, end, animationArray) {
 
 	let remaining = mid - beginHalf1;
 	for (let i = 0; i <= remaining; i++) {
+		animationArray.push([beginHalf1 + i, beginHalf1 + i]);
+		animationArray.push([beginHalf1 + i, beginHalf1 + i]);
+		animationArray.push([current + i, tempArray[beginHalf1 + i]]);
 		array[current + i] = tempArray[beginHalf1 + i];
-		animationArray.push([beginHalf1 + i, beginHalf1 + i]);
-		animationArray.push([beginHalf1 + i, beginHalf1 + i]);
-		animationArray.push([current + i, beginHalf1 + i]);
 	}
 }

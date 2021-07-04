@@ -31,24 +31,25 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 			switch(currentButton.props.value) {
 				case("Merge Sort"):
 					const animationArray = mergeSort(this.state.sortingArray);
-					const arrayBars = document.getElementsByClassName("arrayElementBar");
-
 					for (let i = 0; i < animationArray.length; i++) {
-						const [barOneIndex, barTwoIndex] = animationArray[i];
-						const barOneStyle = arrayBars[barOneIndex].style;
-						const barTwoStyle = arrayBars[barTwoIndex].style;
+						const arrayBars = document.getElementsByClassName("arrayElementBar");
 						const doesColorChange = i % 3 !== 2;
 
 						if (doesColorChange) {
+							const [barOneIndex, barTwoIndex] = animationArray[i];
+							const barOneStyle = arrayBars[barOneIndex].style;
+							const barTwoStyle = arrayBars[barTwoIndex].style;
 							const color = i % 3 === 0 ? 'red' : 'turquoise';
 							setTimeout(() => {
 								barOneStyle.backgroundColor = color;
 								barTwoStyle.backgroundColor = color;
-							}, i * 10);
+							}, i * 5);
 						} else {
 							setTimeout(() => {
-								barOneStyle.height = barTwoStyle.height;
-							}, i * 10);
+								const [barOneIndex, newHeight] = animationArray[i];
+								const barOneStyle = arrayBars[barOneIndex].style;
+								barOneStyle.height = `${newHeight}px`;
+							}, i * 5);
 						}
 					}
 					break;
@@ -60,6 +61,8 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					break;
 			}
 		}
+
+		flash(document.getElementsByClassName("arrayElementBar"));
 	}
 
 	render() {
@@ -165,6 +168,21 @@ function mergeSort(array) {
 	return animationArray;
 }
 
+function flash(array) {
+	setTimeout(() => {
+		for (let i = 0; i < array.length; i++) {
+			array[i].style.backgroundColor = 'red';
+		}
+	}, 100);
+
+	setTimeout(() => {
+		for (let i = 0; i < array.length; i++) {
+			array[i].style.backgroundColor = 'turquoise';
+		}
+	}, 100);
+}
+
+/*
 function arraysAreEqual(arrayOne, arrayTwo) {
 	if (arrayOne.length !== arrayTwo.length) return false;
 
@@ -174,3 +192,4 @@ function arraysAreEqual(arrayOne, arrayTwo) {
 
 	return true;
 }
+*/
