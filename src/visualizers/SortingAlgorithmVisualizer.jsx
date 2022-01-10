@@ -23,46 +23,30 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(150);
+		this.resetSortingArray(100);
 	}
 
 	handleSortClick = () => {
 		if(currentButton != null) {
 			switch(currentButton.props.value) {
 				case("Merge Sort"):
-					const animationArray = mergeSort(this.state.sortingArray);
-					for (let i = 0; i < animationArray.length; i++) {
-						const arrayBars = document.getElementsByClassName("arrayElementBar");
-						const doesColorChange = i % 3 !== 2;
-
-						if (doesColorChange) {
-							const [barOneIndex, barTwoIndex] = animationArray[i];
-							const barOneStyle = arrayBars[barOneIndex].style;
-							const barTwoStyle = arrayBars[barTwoIndex].style;
-							const color = i % 3 === 0 ? 'red' : 'turquoise';
-							setTimeout(() => {
-								barOneStyle.backgroundColor = color;
-								barTwoStyle.backgroundColor = color;
-							}, i * 5);
-						} else {
-							setTimeout(() => {
-								const [barOneIndex, newHeight] = animationArray[i];
-								const barOneStyle = arrayBars[barOneIndex].style;
-								barOneStyle.height = `${newHeight}px`;
-							}, i * 5);
-						}
-					}
+					mergeSort(this.state.sortingArray);
 					break;
 				case("Selection Sort"):
 					alert("Selection Sort");
+					break;
+				case("Generate New Array"):
+					alert("Generate New Array");
 					break;
 				default:
 					alert("default");
 					break;
 			}
 		}
+	}
 
-		flash(document.getElementsByClassName("arrayElementBar"));
+	handleGenerateNewArrayClick = () => {
+		this.resetSortingArray(100);
 	}
 
 	render() {
@@ -125,6 +109,18 @@ class SortButton extends React.Component {
 	}
 }
 
+class GenerateNewArrayButton extends React.Component {
+	render() {
+		return (
+			<button
+			className="generateNewArrayButton"
+			onClick={this.props.handleGenerateNewArrayClick}>
+			Generate New Array
+			</button>
+		);
+	}
+}
+
 class SortingAlgorithmHeader extends React.Component {
 	renderButton(text) {
 		return (
@@ -137,6 +133,11 @@ class SortingAlgorithmHeader extends React.Component {
 	render() {
 		return (
 			<div className="sortingAlgorithmHeader">
+				<span className="generateNewArrayButtonContainer">
+					<GenerateNewArrayButton
+						handleGenerateNewArrayClick={this.props.handleGenerateNewArrayClick}
+					/>
+				</span>
 				<div className="sortingButtonContainer">
 					<span id="separator1"></span>
 					{this.renderButton("Selection Sort")} 
@@ -154,6 +155,17 @@ class SortingAlgorithmHeader extends React.Component {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
 // Function retrieved from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function randomInteger(start, end) {
 	return Math.floor(Math.random() * (end - start) + start);
@@ -162,24 +174,42 @@ function randomInteger(start, end) {
 function mergeSort(array) {
 	const tempArray = [];
 	const animationArray = [];
+	const arrayBars = document.getElementsByClassName("arrayElementBar");
 
 	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
 
-	return animationArray;
+	for (let i = 0; i < animationArray.length; i++) {
+		const doesColorChange = i % 3 !== 2;
+
+		if (doesColorChange) {
+			const [barOneIndex, barTwoIndex] = animationArray[i];
+			const barOneStyle = arrayBars[barOneIndex].style;
+			const barTwoStyle = arrayBars[barTwoIndex].style;
+			const color = i % 3 === 0 ? 'red' : 'turquoise';
+			setTimeout(() => {
+				barOneStyle.backgroundColor = color;
+				barTwoStyle.backgroundColor = color;
+			}, i * 10);
+		} else {
+			setTimeout(() => {
+				const [barOneIndex, newHeight] = animationArray[i];
+				const barOneStyle = arrayBars[barOneIndex].style;
+				barOneStyle.height = `${newHeight}px`;
+			}, i * 10);
+		}
+	}
 }
 
 function flash(array) {
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			array[i].style.backgroundColor = 'red';
-		}
-	}, 100);
-
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			array[i].style.backgroundColor = 'turquoise';
-		}
-	}, 100);
+	for (let i = 0; i < array.length; i++) {
+		const barStyle = array[i].style;
+		setTimeout(() => {
+			barStyle.backgroundColor = 'red';
+			setTimeout(() => {
+				barStyle.backgroundColor = 'turquoise';
+			}, 10);
+		}, 10);
+	}
 }
 
 /*

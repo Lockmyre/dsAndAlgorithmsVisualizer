@@ -16,10 +16,10 @@
 
 .currentSortingAlgorithmButton {
 	transition: 0.3s;
-	font-size: 24px;
+	font-size: 21px;
 	color: white;
-	height: 70px;
-	width: 170px;
+	height: 50px;
+	width: 150px;
 	background-color: #2196F3;
 	border-radius: 5px;
 	border-width: 2px;
@@ -30,10 +30,10 @@
 
 .sortingAlgorithmButton {
 	transition: 0.3s;
-	font-size: 24px;
+	font-size: 21px;
 	color: #2196F3;
-	height: 70px;
-	width: 170px;
+	height: 50px;
+	width: 150px;
 	background-color: white;
 	border-radius: 5px;
 	border-width: 2px;
@@ -74,7 +74,7 @@
 .sortButton {
 	cursor: pointer;
 	display: inline-block;
-	position: absolute;
+	/*position: absolute;*/
 	margin-left: 4%;
 	background-color: #4F4789;
 	color: white;
@@ -94,4 +94,8 @@
 	width: 100%;
 	background: linear-gradient(90deg, rgba(126,146,223,1) 0%, rgba(92,118,208,1) 48%, rgba(71,99,204,1) 83%);
 
+}
+
+.generateNewArrayButtonContainer {
+	display: inherit;
 }
