@@ -113,7 +113,7 @@ class GenerateNewArrayButton extends React.Component {
 	render() {
 		return (
 			<button
-			className="generateNewArrayButton"
+			id="generateNewArrayButton"
 			onClick={this.props.handleGenerateNewArrayClick}>
 			Generate New Array
 			</button>
@@ -133,12 +133,12 @@ class SortingAlgorithmHeader extends React.Component {
 	render() {
 		return (
 			<div className="sortingAlgorithmHeader">
-				<span className="generateNewArrayButtonContainer">
-					<GenerateNewArrayButton
-						handleGenerateNewArrayClick={this.props.handleGenerateNewArrayClick}
-					/>
-				</span>
 				<div className="sortingButtonContainer">
+					<span id="generateNewArrayButtonContainer">
+						<GenerateNewArrayButton
+							handleGenerateNewArrayClick={this.props.handleGenerateNewArrayClick}
+						/>
+					</span>
 					<span id="separator1"></span>
 					{this.renderButton("Selection Sort")} 
 					{this.renderButton("Insertion Sort")}
