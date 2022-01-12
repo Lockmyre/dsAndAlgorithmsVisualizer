@@ -39,7 +39,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					alert("Generate New Array");
 					break;
 				default:
-					alert("default");
+					alert("Quicksort");
 					break;
 			}
 		}
@@ -57,6 +57,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 				<SortingAlgorithmHeader 
 					sortingArray={this.state.sortingArray}
 					handleSortClick={this.handleSortClick}
+					handleGenerateNewArrayClick={this.handleGenerateNewArrayClick}
 					/>
 				<div className="arrayElementContainer">
 					{sortingArray.map((value, index) => (

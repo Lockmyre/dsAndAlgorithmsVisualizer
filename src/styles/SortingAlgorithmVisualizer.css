@@ -146,6 +146,7 @@
   box-shadow: none;
 }
 
+/* Button retrieved from getcssscan.com/css-buttons-examples */
 .sortButton {
 	margin-left: 2%;
   background-image: linear-gradient(#f7f8fa ,#e7e9ec);
