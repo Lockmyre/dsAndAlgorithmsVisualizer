@@ -16,7 +16,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	resetSortingArray(arrayLength) {
 		const sortingArray = [];
 		for (let i = 0; i < arrayLength; i++) {
-			sortingArray.push(randomInteger(5, 701));
+			sortingArray.push(randomInteger(5, 501));
 		}
 
 		this.setState({sortingArray});
@@ -59,7 +59,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					handleSortClick={this.handleSortClick}
 					handleGenerateNewArrayClick={this.handleGenerateNewArrayClick}
 					/>
-				<div className="arrayElementContainer">
+				<div id="arrayElementContainer">
 					{sortingArray.map((value, index) => (
 						<div 
 						className="arrayElementBar" 
@@ -133,7 +133,7 @@ class SortingAlgorithmHeader extends React.Component {
 
 	render() {
 		return (
-			<div className="sortingAlgorithmHeader">
+			<div id="sortingAlgorithmHeader">
 				<div className="sortingButtonContainer">
 					<span id="generateNewArrayButtonContainer">
 						<GenerateNewArrayButton
@@ -179,26 +179,30 @@ function mergeSort(array) {
 
 	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
 
-	for (let i = 0; i < animationArray.length; i++) {
-		const doesColorChange = i % 3 !== 2;
+	animate(animationArray, arrayBars);
+}
 
-		if (doesColorChange) {
-			const [barOneIndex, barTwoIndex] = animationArray[i];
+function animate(animationArray, arrayBars) {
+	for (let i = 0; i < animationArray.length; i++) {
+	const doesColorChange = i % 3 !== 2;
+
+	if (doesColorChange) {
+		const [barOneIndex, barTwoIndex] = animationArray[i];
+		const barOneStyle = arrayBars[barOneIndex].style;
+		const barTwoStyle = arrayBars[barTwoIndex].style;
+		const color = i % 3 === 0 ? 'red' : 'turquoise';
+		setTimeout(() => {
+			barOneStyle.backgroundColor = color;
+			barTwoStyle.backgroundColor = color;
+		}, i * 10);
+	} else {
+		setTimeout(() => {
+			const [barOneIndex, newHeight] = animationArray[i];
 			const barOneStyle = arrayBars[barOneIndex].style;
-			const barTwoStyle = arrayBars[barTwoIndex].style;
-			const color = i % 3 === 0 ? 'red' : 'turquoise';
-			setTimeout(() => {
-				barOneStyle.backgroundColor = color;
-				barTwoStyle.backgroundColor = color;
-			}, i * 10);
-		} else {
-			setTimeout(() => {
-				const [barOneIndex, newHeight] = animationArray[i];
-				const barOneStyle = arrayBars[barOneIndex].style;
-				barOneStyle.height = `${newHeight}px`;
-			}, i * 10);
-		}
+			barOneStyle.height = `${newHeight}px`;
+		}, i * 10);
 	}
+}
 }
 
 function flash(array) {

@@ -44,3 +44,8 @@ function merge(array, tempArray, first, mid, end, animationArray) {
 		array[current + i] = tempArray[beginHalf1 + i];
 	}
 }
+
+export function _selectionSort(array, lengthOfArray) {
+	/*for (let i = 0; i < lengthOfArray - 1; i++) {}*/
+
+}
