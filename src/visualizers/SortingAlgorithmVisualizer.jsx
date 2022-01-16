@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/SortingAlgorithmVisualizer.css';
 import {_mergeSort} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {_selectionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 
 var currentButton = null;
 
@@ -23,7 +24,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(100);
+		this.resetSortingArray(75);
 	}
 
 	handleSortClick = () => {
@@ -33,7 +34,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					mergeSort(this.state.sortingArray);
 					break;
 				case("Selection Sort"):
-					alert("Selection Sort");
+					selectionSort(this.state.sortingArray);
 					break;
 				case("Generate New Array"):
 					alert("Generate New Array");
@@ -179,42 +180,81 @@ function mergeSort(array) {
 
 	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
 
-	animate(animationArray, arrayBars);
-}
-
-function animate(animationArray, arrayBars) {
 	for (let i = 0; i < animationArray.length; i++) {
 	const doesColorChange = i % 3 !== 2;
 
-	if (doesColorChange) {
-		const [barOneIndex, barTwoIndex] = animationArray[i];
-		const barOneStyle = arrayBars[barOneIndex].style;
-		const barTwoStyle = arrayBars[barTwoIndex].style;
-		const color = i % 3 === 0 ? 'red' : 'turquoise';
-		setTimeout(() => {
-			barOneStyle.backgroundColor = color;
-			barTwoStyle.backgroundColor = color;
-		}, i * 10);
-	} else {
-		setTimeout(() => {
-			const [barOneIndex, newHeight] = animationArray[i];
+		if (doesColorChange) {
+			const [barOneIndex, barTwoIndex] = animationArray[i];
 			const barOneStyle = arrayBars[barOneIndex].style;
-			barOneStyle.height = `${newHeight}px`;
-		}, i * 10);
+			const barTwoStyle = arrayBars[barTwoIndex].style;
+			const color = i % 3 === 0 ? 'red' : 'turquoise';
+			setTimeout(() => {
+				barOneStyle.backgroundColor = color;
+				barTwoStyle.backgroundColor = color;
+			}, i * 10);
+		} else {
+			setTimeout(() => {
+				const [barOneIndex, newHeight] = animationArray[i];
+				const barOneStyle = arrayBars[barOneIndex].style;
+				barOneStyle.height = `${newHeight}px`;
+			}, i * 10);
+		}
 	}
 }
+
+function selectionSort(array) {
+	const animationArray = [];
+	const arrayBars = document.getElementsByClassName("arrayElementBar");
+	const compare = "compare";
+	const newSmallest = "newSmallest";
+	const swap = "swap";
+	var firstCompared = arrayBars[0];
+	firstCompared.style.backgroundColor = 'red';
+	var secondCompared = arrayBars[1];
+	secondCompared.style.backgroundColor = 'red';
+	_selectionSort(array, array.length, animationArray);
+
+	for (let i = 0; i < animationArray.length; i++) {
+		setTimeout(() => {
+			if (animationArray[i][0].valueOf() === compare) {
+				firstCompared.style.backgroundColor = 'turquoise';
+				secondCompared.style.backgroundColor = 'turquoise';
+				firstCompared = arrayBars[animationArray[i][1]];
+				secondCompared = arrayBars[animationArray[i][2]];
+				firstCompared.style.backgroundColor = 'red';
+				secondCompared.style.backgroundColor = 'red';
+			}
+			else if (animationArray[i][0].valueOf() === newSmallest) {
+				firstCompared.style.backgroundColor = 'turquoise';
+				firstCompared = arrayBars[animationArray[i][2]];
+				firstCompared.style.backgroundColor = 'red';
+			}
+			else {
+				let barOneStyle = arrayBars[animationArray[i][1]].style;
+				let barTwoStyle = arrayBars[animationArray[i][2]].style;
+
+				let temp = barOneStyle.height;
+				barOneStyle.height = `${barTwoStyle.height}`;
+				barTwoStyle.height = `${temp}`
+			}
+		}, i * 10);
+	}
 }
 
 function flash(array) {
-	for (let i = 0; i < array.length; i++) {
-		const barStyle = array[i].style;
-		setTimeout(() => {
+	setTimeout(() => {
+		for (let i = 0; i < array.length; i++) {
+			const barStyle = array[i].style;
 			barStyle.backgroundColor = 'red';
-			setTimeout(() => {
-				barStyle.backgroundColor = 'turquoise';
-			}, 10);
-		}, 10);
-	}
+		}
+	}, 100);
+
+	setTimeout(() => {
+		for (let i = 0; i < array.length; i++) {
+			const barStyle = array[i].style;
+			barStyle.backgroundColor = 'turquoise';
+		}
+	}, 1000);
 }
 
 /*

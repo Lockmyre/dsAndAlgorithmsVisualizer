@@ -45,7 +45,22 @@ function merge(array, tempArray, first, mid, end, animationArray) {
 	}
 }
 
-export function _selectionSort(array, lengthOfArray) {
-	/*for (let i = 0; i < lengthOfArray - 1; i++) {}*/
-
+export function _selectionSort(array, lengthOfArray, animationArray) {
+	for (let i = 0; i < lengthOfArray - 1; i++) {
+		const animation = {};
+		let min = array[i];
+		let indexOfMin = i;
+		for (let index = i + 1; index <= lengthOfArray - 1; index++) {
+			animationArray.push(["compare", indexOfMin, index]);
+			if (array[index] < min) {
+				animationArray.push(["newSmallest", indexOfMin, index]);
+				min = array[index];
+				indexOfMin = index;
+			}
+		}
+		animationArray.push(["swap", i, indexOfMin]);
+		let temp = array[i];
+		array[i] = array[indexOfMin];
+		array[indexOfMin] = temp;
+	}
 }
