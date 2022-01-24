@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/SortingAlgorithmVisualizer.css';
 import {_mergeSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 import {_selectionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {_insertionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 
 var currentButton = null;
 
@@ -30,11 +31,14 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	handleSortClick = () => {
 		if(currentButton != null) {
 			switch(currentButton.props.value) {
-				case("Merge Sort"):
-					mergeSort(this.state.sortingArray);
-					break;
 				case("Selection Sort"):
 					selectionSort(this.state.sortingArray);
+					break;
+				case("Insertion Sort"):
+					insertionSort(this.state.sortingArray);
+					break;
+				case("Merge Sort"):
+					mergeSort(this.state.sortingArray);
 					break;
 				case("Generate New Array"):
 					alert("Generate New Array");
@@ -168,7 +172,7 @@ class SortingAlgorithmHeader extends React.Component {
 
 
 
-// Function retrieved from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+// randomInteger function retrieved from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function randomInteger(start, end) {
 	return Math.floor(Math.random() * (end - start) + start);
 }
@@ -207,10 +211,9 @@ function selectionSort(array) {
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 	const compare = "compare";
 	const newSmallest = "newSmallest";
-	const swap = "swap";
 	var firstCompared = arrayBars[0];
-	firstCompared.style.backgroundColor = 'red';
 	var secondCompared = arrayBars[1];
+	firstCompared.style.backgroundColor = 'red';
 	secondCompared.style.backgroundColor = 'red';
 	_selectionSort(array, array.length, animationArray);
 
@@ -241,30 +244,34 @@ function selectionSort(array) {
 	}
 }
 
-function flash(array) {
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			const barStyle = array[i].style;
-			barStyle.backgroundColor = 'red';
-		}
-	}, 100);
+function insertionSort(array) {
+	var animationArray = [];
+	const arrayBars = document.getElementsByClassName("arrayElementBar");
+	const compare = "compare";
+	var firstCompared = arrayBars[0];
+	var secondCompared = arrayBars[1];
+	firstCompared.style.backgroundColor = 'red';
+	secondCompared.style.backgroundColor = 'red';
+	animationArray = _insertionSort(array);
 
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			const barStyle = array[i].style;
-			barStyle.backgroundColor = 'turquoise';
-		}
-	}, 1000);
-}
+	for (let i = 0; i < animationArray.length; i++) {
+		setTimeout(() => {
+			if (animationArray[i][0].valueOf() === compare) {
+				firstCompared.style.backgroundColor = 'turquoise';
+				secondCompared.style.backgroundColor = 'turquoise';
+				firstCompared = arrayBars[animationArray[i][1]];
+				secondCompared = arrayBars[animationArray[i][2]];
+				firstCompared.style.backgroundColor = 'red';
+				secondCompared.style.backgroundColor = 'red';
+			}
+			else {
+				let barOneStyle = arrayBars[animationArray[i][1]].style;
+				let barTwoStyle = arrayBars[animationArray[i][2]].style;
 
-/*
-function arraysAreEqual(arrayOne, arrayTwo) {
-	if (arrayOne.length !== arrayTwo.length) return false;
-
-	for (let i = 0; i < arrayOne.length; i++) {
-		if (arrayOne[i] !== arrayTwo[i]) return false;
+				let temp = barOneStyle.height;
+				barOneStyle.height = `${barTwoStyle.height}`;
+				barTwoStyle.height = `${temp}`
+			}
+		}, i * 1000);
 	}
-
-	return true;
 }
-*/
