@@ -6,6 +6,12 @@ import {_insertionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 
 var currentButton = null;
 
+
+
+/* TODO: FIX INSERTION SORT SWAP */
+
+
+
 export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -272,6 +278,6 @@ function insertionSort(array) {
 				barOneStyle.height = `${barTwoStyle.height}`;
 				barTwoStyle.height = `${temp}`
 			}
-		}, i * 1000);
+		}, i * 50);
 	}
 }

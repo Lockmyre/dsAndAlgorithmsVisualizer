@@ -77,7 +77,7 @@ export function _insertionSort(array) {
 function insertInOrder(anEntry, array, end, animationArray) {
 	let index = end;
 	while (index >= 0 && anEntry < array[index]) {
-		animationArray.push(["compare", end+1, index]);
+		animationArray.push(["compare", index+1, index]);
 		animationArray.push(["insert", index+1, index]);
 		array[index+1] = array[index];
 		index--;
