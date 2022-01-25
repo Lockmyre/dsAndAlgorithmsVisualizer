@@ -1,16 +1,11 @@
 import React from 'react';
 import '../styles/SortingAlgorithmVisualizer.css';
-import {_mergeSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 import {_selectionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 import {_insertionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {_mergeSort} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {_quickSort} from '../sortingAlgorithms/sortingAlgorithms.js';
 
 var currentButton = null;
-
-
-
-/* TODO: FIX INSERTION SORT SWAP */
-
-
 
 export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
@@ -41,16 +36,22 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					selectionSort(this.state.sortingArray);
 					break;
 				case("Insertion Sort"):
+					alert(this.state.sortingArray);
 					insertionSort(this.state.sortingArray);
+					alert(this.state.sortingArray);
 					break;
 				case("Merge Sort"):
 					mergeSort(this.state.sortingArray);
+					break;
+				case("Quicksort"):
+					alert(this.state.sortingArray);
+					quickSort(this.state.sortingArray);
+					alert(this.state.sortingArray);
 					break;
 				case("Generate New Array"):
 					alert("Generate New Array");
 					break;
 				default:
-					alert("Quicksort");
 					break;
 			}
 		}
@@ -188,8 +189,9 @@ function mergeSort(array) {
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 
+	console.log(array);
 	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
-
+	console.log(array);
 	for (let i = 0; i < animationArray.length; i++) {
 	const doesColorChange = i % 3 !== 2;
 
@@ -280,4 +282,8 @@ function insertionSort(array) {
 			}
 		}, i * 50);
 	}
+}
+
+function quickSort(array) {
+	_quickSort(array);
 }
