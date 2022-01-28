@@ -44,9 +44,10 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					mergeSort(this.state.sortingArray);
 					break;
 				case("Quicksort"):
-					alert(this.state.sortingArray);
+					console.log(this.state.sortingArray);
 					quickSort(this.state.sortingArray);
-					alert(this.state.sortingArray);
+					console.log(this.state.sortingArray);
+					console.log(isSorted(this.state.sortingArray));
 					break;
 				case("Generate New Array"):
 					alert("Generate New Array");
@@ -285,5 +286,14 @@ function insertionSort(array) {
 }
 
 function quickSort(array) {
-	_quickSort(array);
+	_quickSort(array, 0, array.length - 1);
+}
+
+function isSorted(array) {
+	for (let i = 0; i < array.length-1; i++) {
+		if (array[i] > array[i+1]) {
+			return false;
+		}
+	}
+	return true;
 }
