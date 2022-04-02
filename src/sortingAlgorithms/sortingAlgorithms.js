@@ -85,32 +85,38 @@ function insertInOrder(anEntry, array, end, animationArray) {
 	array[index+1] = anEntry;
 }
 
-export function _quickSort(array, left, right) {
-	let index = partition(array, left, right);
+export function _quickSort(array, left, right, animationArray) {
+	let index = partition(array, left, right, animationArray);
 	if (left < index - 1) {
-		_quickSort(array, left, index - 1);
+		_quickSort(array, left, index - 1, animationArray);
 	}
 	if (index < right) {
-		_quickSort(array, index, right);
+		_quickSort(array, index, right, animationArray);
 	}
 }
 
-function partition(array, left, right) {
-	let pivot = array[Math.floor((left + right) / 2)];
+function partition(array, left, right, animationArray) {
+	let pivotIndex = Math.floor((left + right) / 2);
+	let pivot = array[pivotIndex];
+	animationArray.push(["setPivot", pivotIndex]);
 
 	while (left <= right) {
 		while (array[left] < pivot) {
+			animationArray.push(["compare", left]);
 			left++;
 		}
+		animationArray.push(["found", left]);
 		while (array[right] > pivot) {
+			animationArray.push(["compare", right]);
 			right--;
 		}
-
 		if (left <= right) {
+			animationArray.push(["swap", left, right]);
 			swap(array, left, right);
 			left++;
 			right--;
 		}
+		animationArray.push(["fin"]);
 	}
 	return left;
 }

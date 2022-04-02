@@ -26,7 +26,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(75);
+		this.resetSortingArray(100);
 	}
 
 	handleSortClick = () => {
@@ -36,21 +36,13 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 					selectionSort(this.state.sortingArray);
 					break;
 				case("Insertion Sort"):
-					alert(this.state.sortingArray);
 					insertionSort(this.state.sortingArray);
-					alert(this.state.sortingArray);
 					break;
 				case("Merge Sort"):
 					mergeSort(this.state.sortingArray);
 					break;
 				case("Quicksort"):
-					console.log(this.state.sortingArray);
 					quickSort(this.state.sortingArray);
-					console.log(this.state.sortingArray);
-					console.log(isSorted(this.state.sortingArray));
-					break;
-				case("Generate New Array"):
-					alert("Generate New Array");
 					break;
 				default:
 					break;
@@ -190,9 +182,7 @@ function mergeSort(array) {
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 
-	console.log(array);
 	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
-	console.log(array);
 	for (let i = 0; i < animationArray.length; i++) {
 	const doesColorChange = i % 3 !== 2;
 
@@ -286,7 +276,48 @@ function insertionSort(array) {
 }
 
 function quickSort(array) {
-	_quickSort(array, 0, array.length - 1);
+	var animationArray = [];
+	const arrayBars = document.getElementsByClassName("arrayElementBar");
+	const setPivot = "setPivot", found = "found", compare = "compare", swap = "swap";
+	var leftSideCompare, rightSideCompare;
+	var pivotBar;
+	var currentCompare = arrayBars[0];
+	_quickSort(array, 0, array.length - 1, animationArray);
+
+	for (let i = 0; i < animationArray.length; i++) {
+		setTimeout(() => {
+			currentCompare.style.backgroundColor = 'turquoise';
+			if (animationArray[i][0].valueOf() === compare) {
+				currentCompare = arrayBars[animationArray[i][1]];
+				currentCompare.style.backgroundColor = 'red';
+			}
+			else if (animationArray[i][0].valueOf() === found) {
+				leftSideCompare = arrayBars[animationArray[i][1]];
+				leftSideCompare.style.backgroundColor = 'red';
+			}
+			else if (animationArray[i][0].valueOf() === swap) {
+				rightSideCompare = arrayBars[animationArray[i][2]];
+				leftSideCompare.style.backgroundColor = 'blue';
+				rightSideCompare.style.backgroundColor = 'blue';
+				let temp = leftSideCompare.style.height
+				leftSideCompare.style.height = `${rightSideCompare.style.height}`;
+				rightSideCompare.style.height = `${temp}`;
+				if (leftSideCompare === pivotBar) {pivotBar = rightSideCompare;}
+				else if (rightSideCompare === pivotBar) {pivotBar = leftSideCompare;}
+			} else if (animationArray[i][0].valueOf() === setPivot) {
+				if (pivotBar !== undefined) {
+					pivotBar.style.backgroundColor = 'turquoise';
+				}
+				pivotBar = arrayBars[animationArray[i][1]];
+				pivotBar.style.backgroundColor = 'green';
+			} else {
+				leftSideCompare.style.backgroundColor = 'turquoise';
+				rightSideCompare.style.backgroundColor = 'turquoise';
+
+			}
+			pivotBar.style.backgroundColor = 'green';
+		}, i * 50);
+	}
 }
 
 function isSorted(array) {
