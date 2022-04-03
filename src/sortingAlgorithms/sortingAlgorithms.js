@@ -47,7 +47,6 @@ function merge(array, tempArray, first, mid, end, animationArray) {
 
 export function _selectionSort(array, lengthOfArray, animationArray) {
 	for (let i = 0; i < lengthOfArray - 1; i++) {
-		const animation = {};
 		let min = array[i];
 		let indexOfMin = i;
 		for (let index = i + 1; index <= lengthOfArray - 1; index++) {
@@ -64,3 +63,67 @@ export function _selectionSort(array, lengthOfArray, animationArray) {
 		array[indexOfMin] = temp;
 	}
 }
+
+export function _insertionSort(array) {
+	var animationArray = [];
+	for (let i = 1; i < array.length; i++) {
+		var nextToInsert = array[i];
+		insertInOrder(nextToInsert, array, i - 1, animationArray);
+	}
+
+	return animationArray;
+}
+
+function insertInOrder(anEntry, array, end, animationArray) {
+	let index = end;
+	while (index >= 0 && anEntry < array[index]) {
+		animationArray.push(["compare", index+1, index]);
+		animationArray.push(["insert", index+1, index]);
+		array[index+1] = array[index];
+		index--;
+	}
+	array[index+1] = anEntry;
+}
+
+export function _quickSort(array, left, right, animationArray) {
+	let index = partition(array, left, right, animationArray);
+	if (left < index - 1) {
+		_quickSort(array, left, index - 1, animationArray);
+	}
+	if (index < right) {
+		_quickSort(array, index, right, animationArray);
+	}
+}
+
+function partition(array, left, right, animationArray) {
+	let pivotIndex = Math.floor((left + right) / 2);
+	let pivot = array[pivotIndex];
+	animationArray.push(["setPivot", pivotIndex]);
+
+	while (left <= right) {
+		while (array[left] < pivot) {
+			animationArray.push(["compare", left]);
+			left++;
+		}
+		animationArray.push(["found", left]);
+		while (array[right] > pivot) {
+			animationArray.push(["compare", right]);
+			right--;
+		}
+		if (left <= right) {
+			animationArray.push(["swap", left, right]);
+			swap(array, left, right);
+			left++;
+			right--;
+		}
+		animationArray.push(["fin"]);
+	}
+	return left;
+}
+
+function swap(array, firstIndex, secondIndex) {
+	let temp = array[firstIndex];
+	array[firstIndex] = array[secondIndex];
+	array[secondIndex] = temp;
+}
+

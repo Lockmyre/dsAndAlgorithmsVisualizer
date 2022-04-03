@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/SortingAlgorithmVisualizer.css';
-import {_mergeSort} from '../sortingAlgorithms/sortingAlgorithms.js';
-import {_selectionSort} from '../sortingAlgorithms/sortingAlgorithms.js';
+import '../styles/Main.css';
+import '../styles/Toolbar.css';
+import * as sortingVisualizers from '../sortingAlgorithms/sortingAlgorithmVisualizers.jsx';
 
 var currentButton = null;
 
@@ -11,6 +11,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 
 		this.state = {
 			sortingArray: [],
+			sortingSpeed: 50,
 		};
 	}
 
@@ -24,28 +25,40 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.resetSortingArray(75);
+		document.getElementById("changeSize").value = 50;
+		document.getElementById("changeSpeed").value = 50;
+		this.resetSortingArray(100);
 	}
 
 	handleSortClick = () => {
 		if(currentButton != null) {
 			switch(currentButton.props.value) {
-				case("Merge Sort"):
-					mergeSort(this.state.sortingArray);
-					break;
 				case("Selection Sort"):
-					selectionSort(this.state.sortingArray);
+					sortingVisualizers.selectionSort(this.state.sortingArray, this.state.sortingSpeed);
 					break;
-				case("Generate New Array"):
-					alert("Generate New Array");
+				case("Insertion Sort"):
+					sortingVisualizers.insertionSort(this.state.sortingArray, this.state.sortingSpeed);
+					break;
+				case("Merge Sort"):
+					alert(this.state.sortingSpeed);
+					sortingVisualizers.mergeSort(this.state.sortingArray, this.state.sortingSpeed);
+					break;
+				case("Quicksort"):
+					sortingVisualizers.quickSort(this.state.sortingArray, this.state.sortingSpeed);
 					break;
 				default:
-					alert("Quicksort");
 					break;
 			}
 		}
 	}
 
+	handleSizeChange = (evt) => {
+		this.resetSortingArray(Math.floor((parseInt(evt.target.value) + 3) * 1.65));
+	}
+	handleSpeedChange = (evt) => {
+		this.state.sortingSpeed = evt.target.value;
+		console.log(this.state.sortingSpeed);
+	}
 	handleGenerateNewArrayClick = () => {
 		this.resetSortingArray(100);
 	}
@@ -56,6 +69,8 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 		return (
 			<body>
 				<SortingAlgorithmHeader 
+					handleSizeChange={this.handleSizeChange}
+					handleSpeedChange={this.handleSpeedChange}
 					sortingArray={this.state.sortingArray}
 					handleSortClick={this.handleSortClick}
 					handleGenerateNewArrayClick={this.handleGenerateNewArrayClick}
@@ -136,17 +151,34 @@ class SortingAlgorithmHeader extends React.Component {
 		return (
 			<div id="sortingAlgorithmHeader">
 				<div className="sortingButtonContainer">
+					<span id="arraySize">Change Array Size</span>
+					<input
+					 id="changeSize"
+					 type="range"
+					 min="0"
+					 max="100"
+					 onChange={this.props.handleSizeChange}
+					/>
+					<span id="sortingSpeed">Change Sorting Speed</span>
+					<input
+					 id="changeSpeed"
+					 type="range"
+					 min="0"
+					 max="100"
+					 onChange={this.props.handleSpeedChange}
+					/>
+					<span class="separator"></span>
 					<span id="generateNewArrayButtonContainer">
 						<GenerateNewArrayButton
 							handleGenerateNewArrayClick={this.props.handleGenerateNewArrayClick}
 						/>
 					</span>
-					<span id="separator1"></span>
+					<span class="separator"></span>
 					{this.renderButton("Selection Sort")} 
 					{this.renderButton("Insertion Sort")}
 					{this.renderButton("Merge Sort")}
 					{this.renderButton("Quicksort")}
-					<span id="separator2"></span>
+					<span class="separator"></span>
 					<SortButton
 						handleSortClick={this.props.handleSortClick}
 					/>
@@ -159,112 +191,7 @@ class SortingAlgorithmHeader extends React.Component {
 
 
 
-
-
-
-
-
-
-
-
-
-// Function retrieved from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+// randomInteger function retrieved from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function randomInteger(start, end) {
 	return Math.floor(Math.random() * (end - start) + start);
 }
-
-function mergeSort(array) {
-	const tempArray = [];
-	const animationArray = [];
-	const arrayBars = document.getElementsByClassName("arrayElementBar");
-
-	_mergeSort(array, tempArray, 0, array.length - 1, animationArray);
-
-	for (let i = 0; i < animationArray.length; i++) {
-	const doesColorChange = i % 3 !== 2;
-
-		if (doesColorChange) {
-			const [barOneIndex, barTwoIndex] = animationArray[i];
-			const barOneStyle = arrayBars[barOneIndex].style;
-			const barTwoStyle = arrayBars[barTwoIndex].style;
-			const color = i % 3 === 0 ? 'red' : 'turquoise';
-			setTimeout(() => {
-				barOneStyle.backgroundColor = color;
-				barTwoStyle.backgroundColor = color;
-			}, i * 10);
-		} else {
-			setTimeout(() => {
-				const [barOneIndex, newHeight] = animationArray[i];
-				const barOneStyle = arrayBars[barOneIndex].style;
-				barOneStyle.height = `${newHeight}px`;
-			}, i * 10);
-		}
-	}
-}
-
-function selectionSort(array) {
-	const animationArray = [];
-	const arrayBars = document.getElementsByClassName("arrayElementBar");
-	const compare = "compare";
-	const newSmallest = "newSmallest";
-	const swap = "swap";
-	var firstCompared = arrayBars[0];
-	firstCompared.style.backgroundColor = 'red';
-	var secondCompared = arrayBars[1];
-	secondCompared.style.backgroundColor = 'red';
-	_selectionSort(array, array.length, animationArray);
-
-	for (let i = 0; i < animationArray.length; i++) {
-		setTimeout(() => {
-			if (animationArray[i][0].valueOf() === compare) {
-				firstCompared.style.backgroundColor = 'turquoise';
-				secondCompared.style.backgroundColor = 'turquoise';
-				firstCompared = arrayBars[animationArray[i][1]];
-				secondCompared = arrayBars[animationArray[i][2]];
-				firstCompared.style.backgroundColor = 'red';
-				secondCompared.style.backgroundColor = 'red';
-			}
-			else if (animationArray[i][0].valueOf() === newSmallest) {
-				firstCompared.style.backgroundColor = 'turquoise';
-				firstCompared = arrayBars[animationArray[i][2]];
-				firstCompared.style.backgroundColor = 'red';
-			}
-			else {
-				let barOneStyle = arrayBars[animationArray[i][1]].style;
-				let barTwoStyle = arrayBars[animationArray[i][2]].style;
-
-				let temp = barOneStyle.height;
-				barOneStyle.height = `${barTwoStyle.height}`;
-				barTwoStyle.height = `${temp}`
-			}
-		}, i * 10);
-	}
-}
-
-function flash(array) {
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			const barStyle = array[i].style;
-			barStyle.backgroundColor = 'red';
-		}
-	}, 100);
-
-	setTimeout(() => {
-		for (let i = 0; i < array.length; i++) {
-			const barStyle = array[i].style;
-			barStyle.backgroundColor = 'turquoise';
-		}
-	}, 1000);
-}
-
-/*
-function arraysAreEqual(arrayOne, arrayTwo) {
-	if (arrayOne.length !== arrayTwo.length) return false;
-
-	for (let i = 0; i < arrayOne.length; i++) {
-		if (arrayOne[i] !== arrayTwo[i]) return false;
-	}
-
-	return true;
-}
-*/
