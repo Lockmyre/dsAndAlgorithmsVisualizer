@@ -138,17 +138,25 @@ class SortingAlgorithmHeader extends React.Component {
 		return (
 			<div id="sortingAlgorithmHeader">
 				<div className="sortingButtonContainer">
+					<span id="arraySize">Change Array Size & Sorting Speed</span>
+					<input
+					 id="changeSize"
+					 type="range"
+					 min="0"
+					 max="100"
+					 />
+					 <span class="separator"></span>
 					<span id="generateNewArrayButtonContainer">
 						<GenerateNewArrayButton
 							handleGenerateNewArrayClick={this.props.handleGenerateNewArrayClick}
 						/>
 					</span>
-					<span id="separator1"></span>
+					<span class="separator"></span>
 					{this.renderButton("Selection Sort")} 
 					{this.renderButton("Insertion Sort")}
 					{this.renderButton("Merge Sort")}
 					{this.renderButton("Quicksort")}
-					<span id="separator2"></span>
+					<span class="separator"></span>
 					<SortButton
 						handleSortClick={this.props.handleSortClick}
 					/>

@@ -7,6 +7,14 @@
 
 }
 
+#arraySize {
+    margin-right: 0.3%;
+}
+
+#changeSize {
+    margin-right: 1%;
+}
+
 .currentSortingAlgorithmButton {
     transition: 0.3s;
     font-size: 21px;
@@ -44,21 +52,11 @@
     margin-left: 20%;
 }
 
-#separator1 {
+.separator {
     width: 2px;
     height: 80px;
     top: 10%;
     margin-right: 1%;
-    display: inline-block;
-    background: #2196F3;
-    margin-top: 10px;
-    margin-bottom: -25px;
-}
-
-#separator2 {
-    width: 2px;
-    height: 80px;
-    top: 10%;
     margin-left: 1%;
     display: inline-block;
     background: #2196F3;
@@ -68,7 +66,6 @@
 
 #generateNewArrayButtonContainer {
     display: inline-block;
-    margin-right: 5%;
 }
 
 #generateNewArrayButton {
@@ -113,7 +110,7 @@
 
 /* Button retrieved from getcssscan.com/css-buttons-examples */
 .sortButton {
-    margin-left: 2%;
+  margin-left: 1%;
   background-image: linear-gradient(#f7f8fa ,#e7e9ec);
   border-color: #adb1b8 #a2a6ac #8d9096;
   border-style: solid;
