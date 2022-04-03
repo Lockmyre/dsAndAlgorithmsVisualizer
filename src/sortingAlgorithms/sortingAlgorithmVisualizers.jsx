@@ -1,6 +1,6 @@
 import * as algorithms from './sortingAlgorithms.js';
 
-export function mergeSort(array) {
+export function mergeSort(array, sortingSpeed) {
 	const tempArray = [];
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
@@ -17,18 +17,18 @@ export function mergeSort(array) {
 			setTimeout(() => {
 				barOneStyle.backgroundColor = color;
 				barTwoStyle.backgroundColor = color;
-			}, i * 10);
+			}, i * sortingSpeed);
 		} else {
 			setTimeout(() => {
 				const [barOneIndex, newHeight] = animationArray[i];
 				const barOneStyle = arrayBars[barOneIndex].style;
 				barOneStyle.height = `${newHeight}px`;
-			}, i * 10);
+			}, i * sortingSpeed);
 		}
 	}
 }
 
-export function selectionSort(array) {
+export function selectionSort(array, sortingSpeed) {
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 	const compare = "compare";
@@ -62,11 +62,11 @@ export function selectionSort(array) {
 				barOneStyle.height = `${barTwoStyle.height}`;
 				barTwoStyle.height = `${temp}`
 			}
-		}, i * 10);
+		}, i * sortingSpeed);
 	}
 }
 
-export function insertionSort(array) {
+export function insertionSort(array, sortingSpeed) {
 	var animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 	const compare = "compare";
@@ -94,11 +94,11 @@ export function insertionSort(array) {
 				barOneStyle.height = `${barTwoStyle.height}`;
 				barTwoStyle.height = `${temp}`
 			}
-		}, i * 50);
+		}, i * sortingSpeed);
 	}
 }
 
-export function quickSort(array) {
+export function quickSort(array, sortingSpeed) {
 	var animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 	const setPivot = "setPivot", found = "found", compare = "compare", swap = "swap";
@@ -139,15 +139,6 @@ export function quickSort(array) {
 
 			}
 			pivotBar.style.backgroundColor = 'green';
-		}, i * 50);
+		}, i * sortingSpeed);
 	}
-}
-
-export function isSorted(array) {
-	for (let i = 0; i < array.length-1; i++) {
-		if (array[i] > array[i+1]) {
-			return false;
-		}
-	}
-	return true;
 }
