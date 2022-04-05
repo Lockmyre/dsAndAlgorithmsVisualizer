@@ -4,11 +4,10 @@ export function mergeSort(array, sortingSpeed) {
 	const tempArray = [];
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
-
 	algorithms._mergeSort(array, tempArray, 0, array.length - 1, animationArray);
-	for (let i = 0; i < animationArray.length; i++) {
-	const doesColorChange = i % 3 !== 2;
 
+	for (let i = 0; i < animationArray.length; i++) {
+		const doesColorChange = i % 3 !== 2;
 		if (doesColorChange) {
 			const [barOneIndex, barTwoIndex] = animationArray[i];
 			const barOneStyle = arrayBars[barOneIndex].style;
@@ -31,8 +30,6 @@ export function mergeSort(array, sortingSpeed) {
 export function selectionSort(array, sortingSpeed) {
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
-	const compare = "compare";
-	const newSmallest = "newSmallest";
 	var firstCompared = arrayBars[0];
 	var secondCompared = arrayBars[1];
 	firstCompared.style.backgroundColor = 'red';
@@ -41,7 +38,7 @@ export function selectionSort(array, sortingSpeed) {
 
 	for (let i = 0; i < animationArray.length; i++) {
 		setTimeout(() => {
-			if (animationArray[i][0].valueOf() === compare) {
+			if (animationArray[i][0].valueOf() === "compare") {
 				firstCompared.style.backgroundColor = 'turquoise';
 				secondCompared.style.backgroundColor = 'turquoise';
 				firstCompared = arrayBars[animationArray[i][1]];
@@ -49,18 +46,32 @@ export function selectionSort(array, sortingSpeed) {
 				firstCompared.style.backgroundColor = 'red';
 				secondCompared.style.backgroundColor = 'red';
 			}
-			else if (animationArray[i][0].valueOf() === newSmallest) {
+			else if (animationArray[i][0].valueOf() === "newSmallest") {
 				firstCompared.style.backgroundColor = 'turquoise';
 				firstCompared = arrayBars[animationArray[i][2]];
 				firstCompared.style.backgroundColor = 'red';
 			}
-			else {
+			else if (animationArray[i][0].valueOf() === "swap") {
 				let barOneStyle = arrayBars[animationArray[i][1]].style;
 				let barTwoStyle = arrayBars[animationArray[i][2]].style;
 
 				let temp = barOneStyle.height;
 				barOneStyle.height = `${barTwoStyle.height}`;
 				barTwoStyle.height = `${temp}`
+			}
+			else if (animationArray[i][0].valueOf() === "flashGreen") {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'SeaGreen';
+					}
+				}, 100);
+			}
+			else {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'turquoise';
+					}
+				}, 1000);
 			}
 		}, i * sortingSpeed);
 	}
@@ -69,7 +80,6 @@ export function selectionSort(array, sortingSpeed) {
 export function insertionSort(array, sortingSpeed) {
 	var animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
-	const compare = "compare";
 	var firstCompared = arrayBars[0];
 	var secondCompared = arrayBars[1];
 	firstCompared.style.backgroundColor = 'red';
@@ -78,7 +88,7 @@ export function insertionSort(array, sortingSpeed) {
 
 	for (let i = 0; i < animationArray.length; i++) {
 		setTimeout(() => {
-			if (animationArray[i][0].valueOf() === compare) {
+			if (animationArray[i][0].valueOf() === "compare") {
 				firstCompared.style.backgroundColor = 'turquoise';
 				secondCompared.style.backgroundColor = 'turquoise';
 				firstCompared = arrayBars[animationArray[i][1]];
@@ -86,13 +96,27 @@ export function insertionSort(array, sortingSpeed) {
 				firstCompared.style.backgroundColor = 'red';
 				secondCompared.style.backgroundColor = 'red';
 			}
-			else {
+			else if (animationArray[i][0].valueOf() === "insert") {
 				let barOneStyle = arrayBars[animationArray[i][1]].style;
 				let barTwoStyle = arrayBars[animationArray[i][2]].style;
 
 				let temp = barOneStyle.height;
 				barOneStyle.height = `${barTwoStyle.height}`;
 				barTwoStyle.height = `${temp}`
+			}
+			else if (animationArray[i][0].valueOf() === "flashGreen") {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'SeaGreen';
+					}
+				}, 100);
+			}
+			else {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'turquoise';
+					}
+				}, 1000);
 			}
 		}, i * sortingSpeed);
 	}
@@ -101,24 +125,25 @@ export function insertionSort(array, sortingSpeed) {
 export function quickSort(array, sortingSpeed) {
 	var animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
-	const setPivot = "setPivot", found = "found", compare = "compare", swap = "swap";
 	var leftSideCompare, rightSideCompare;
 	var pivotBar;
 	var currentCompare = arrayBars[0];
 	algorithms._quickSort(array, 0, array.length - 1, animationArray);
+	animationArray.push(["flashGreen"]);
+	animationArray.push(["returnTurquoise"]);
 
 	for (let i = 0; i < animationArray.length; i++) {
 		setTimeout(() => {
 			currentCompare.style.backgroundColor = 'turquoise';
-			if (animationArray[i][0].valueOf() === compare) {
+			if (animationArray[i][0].valueOf() === "compare") {
 				currentCompare = arrayBars[animationArray[i][1]];
 				currentCompare.style.backgroundColor = 'red';
 			}
-			else if (animationArray[i][0].valueOf() === found) {
+			else if (animationArray[i][0].valueOf() === "found") {
 				leftSideCompare = arrayBars[animationArray[i][1]];
 				leftSideCompare.style.backgroundColor = 'red';
 			}
-			else if (animationArray[i][0].valueOf() === swap) {
+			else if (animationArray[i][0].valueOf() === "swap") {
 				rightSideCompare = arrayBars[animationArray[i][2]];
 				leftSideCompare.style.backgroundColor = 'blue';
 				rightSideCompare.style.backgroundColor = 'blue';
@@ -127,16 +152,32 @@ export function quickSort(array, sortingSpeed) {
 				rightSideCompare.style.height = `${temp}`;
 				if (leftSideCompare === pivotBar) {pivotBar = rightSideCompare;}
 				else if (rightSideCompare === pivotBar) {pivotBar = leftSideCompare;}
-			} else if (animationArray[i][0].valueOf() === setPivot) {
+			} 
+			else if (animationArray[i][0].valueOf() === "setPivot") {
 				if (pivotBar !== undefined) {
 					pivotBar.style.backgroundColor = 'turquoise';
 				}
 				pivotBar = arrayBars[animationArray[i][1]];
 				pivotBar.style.backgroundColor = 'green';
-			} else {
+			} 
+			else if (animationArray[i][0].valueOf() === "fin") {
 				leftSideCompare.style.backgroundColor = 'turquoise';
 				rightSideCompare.style.backgroundColor = 'turquoise';
 
+			}
+			else if (animationArray[i][0].valueOf() === "flashGreen") {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'SeaGreen';
+					}
+				}, 100);
+			}
+			else {
+				setTimeout(() => {
+					for (let j = 0; j < arrayBars.length; j++) {
+						arrayBars[j].style.backgroundColor = 'turquoise';
+					}
+				}, 1000);
 			}
 			pivotBar.style.backgroundColor = 'green';
 		}, i * sortingSpeed);
