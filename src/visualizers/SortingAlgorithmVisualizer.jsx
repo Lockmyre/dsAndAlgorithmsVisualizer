@@ -5,6 +5,11 @@ import * as sortingVisualizers from '../sortingAlgorithms/sortingAlgorithmVisual
 
 var currentButton = null;
 
+export function resetIsRunning() {
+	document.getElementById("changeSize").disabled = null;
+	document.getElementById("changeSpeed").disabled = null;
+}
+
 export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,6 +17,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 		this.state = {
 			sortingArray: [],
 			sortingSpeed: 50,
+			arrayLen: 50,
 		};
 	}
 
@@ -27,24 +33,25 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	componentDidMount() {
 		document.getElementById("changeSize").value = 50;
 		document.getElementById("changeSpeed").value = 50;
-		this.resetSortingArray(100);
+		this.resetSortingArray(50);
 	}
 
 	handleSortClick = () => {
+		document.getElementById("changeSize").disabled = "disabled";
+		document.getElementById("changeSpeed").disabled = "disabled";
 		if(currentButton != null) {
 			switch(currentButton.props.value) {
 				case("Selection Sort"):
-					sortingVisualizers.selectionSort(this.state.sortingArray, this.state.sortingSpeed);
+					sortingVisualizers.selectionSort(this.state.sortingArray, 100 - this.state.sortingSpeed);
 					break;
 				case("Insertion Sort"):
-					sortingVisualizers.insertionSort(this.state.sortingArray, this.state.sortingSpeed);
+					sortingVisualizers.insertionSort(this.state.sortingArray, 100 - this.state.sortingSpeed);
 					break;
 				case("Merge Sort"):
-					alert(this.state.sortingSpeed);
-					sortingVisualizers.mergeSort(this.state.sortingArray, this.state.sortingSpeed);
+					sortingVisualizers.mergeSort(this.state.sortingArray, 100 - this.state.sortingSpeed);
 					break;
 				case("Quicksort"):
-					sortingVisualizers.quickSort(this.state.sortingArray, this.state.sortingSpeed);
+					sortingVisualizers.quickSort(this.state.sortingArray, 100 - this.state.sortingSpeed);
 					break;
 				default:
 					break;
@@ -52,23 +59,29 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 		}
 	}
 
+	handleStopClick = () => {
+		window.location.reload();
+	}
 	handleSizeChange = (evt) => {
-		this.resetSortingArray(Math.floor((parseInt(evt.target.value) + 3) * 1.65));
+		let newLen = evt.target.value;
+		this.resetSortingArray(newLen);
+		this.state.arrayLen = newLen;
 	}
 	handleSpeedChange = (evt) => {
 		this.state.sortingSpeed = evt.target.value;
-		console.log(this.state.sortingSpeed);
 	}
 	handleGenerateNewArrayClick = () => {
-		this.resetSortingArray(100);
+		this.resetSortingArray(this.state.arrayLen);
 	}
 
 	render() {
 		const {sortingArray} = this.state;
+		const barWidth = Math.floor(window.innerWidth / (sortingArray.length * 3));
 
 		return (
 			<body>
 				<SortingAlgorithmHeader 
+					handleStopClick={this.handleStopClick}
 					handleSizeChange={this.handleSizeChange}
 					handleSpeedChange={this.handleSpeedChange}
 					sortingArray={this.state.sortingArray}
@@ -80,7 +93,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 						<div 
 						className="arrayElementBar" 
 						key={index}
-						style={{height: value}}>
+						style={{height: value, width: barWidth}}>
 						</div>
 					))}
 				</div>
@@ -120,7 +133,7 @@ class SortButton extends React.Component {
 			<button 
 			className="sortButton"
 			onClick={this.props.handleSortClick}>
-			Click to sort 
+			Click to sort
 			</button>
 		);
 	}
@@ -155,7 +168,7 @@ class SortingAlgorithmHeader extends React.Component {
 					<input
 					 id="changeSize"
 					 type="range"
-					 min="0"
+					 min="4"
 					 max="100"
 					 onChange={this.props.handleSizeChange}
 					/>
@@ -164,7 +177,7 @@ class SortingAlgorithmHeader extends React.Component {
 					 id="changeSpeed"
 					 type="range"
 					 min="0"
-					 max="100"
+					 max="99"
 					 onChange={this.props.handleSpeedChange}
 					/>
 					<span class="separator"></span>
@@ -182,6 +195,11 @@ class SortingAlgorithmHeader extends React.Component {
 					<SortButton
 						handleSortClick={this.props.handleSortClick}
 					/>
+					<button
+						id="stopButton"
+						onClick={this.props.handleStopClick}>
+						Stop sorting
+					</button>
 				</div>
 			</div>
 		);

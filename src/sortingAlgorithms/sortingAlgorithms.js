@@ -62,6 +62,8 @@ export function _selectionSort(array, lengthOfArray, animationArray) {
 		array[i] = array[indexOfMin];
 		array[indexOfMin] = temp;
 	}
+	animationArray.push(["flashGreen"]);
+	animationArray.push(["returnTurquoise"]);
 }
 
 export function _insertionSort(array) {
@@ -71,6 +73,8 @@ export function _insertionSort(array) {
 		insertInOrder(nextToInsert, array, i - 1, animationArray);
 	}
 
+	animationArray.push(["flashGreen"]);
+	animationArray.push(["returnTurquoise"]);
 	return animationArray;
 }
 
