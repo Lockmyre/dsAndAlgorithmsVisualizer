@@ -1,24 +1,35 @@
 import * as algorithms from './sortingAlgorithms.js';
+import * as sortingAlgorithmVisualizer from '../visualizers/SortingAlgorithmVisualizer.jsx';
 
 export function mergeSort(array, sortingSpeed) {
 	const tempArray = [];
 	const animationArray = [];
 	const arrayBars = document.getElementsByClassName("arrayElementBar");
 	algorithms._mergeSort(array, tempArray, 0, array.length - 1, animationArray);
+	animationArray.push(["finishedSorting"]);
 
 	for (let i = 0; i < animationArray.length; i++) {
 		const doesColorChange = i % 3 !== 2;
+
 		if (doesColorChange) {
-			const [barOneIndex, barTwoIndex] = animationArray[i];
-			const barOneStyle = arrayBars[barOneIndex].style;
-			const barTwoStyle = arrayBars[barTwoIndex].style;
-			const color = i % 3 === 0 ? 'red' : 'turquoise';
 			setTimeout(() => {
+				if (animationArray[i][0].valueOf() === "finishedSorting") {
+					sortingAlgorithmVisualizer.resetIsRunning();
+					return;
+				}
+				const [barOneIndex, barTwoIndex] = animationArray[i];
+				const barOneStyle = arrayBars[barOneIndex].style;
+				const barTwoStyle = arrayBars[barTwoIndex].style;
+				const color = i % 3 === 0 ? 'red' : 'turquoise';
 				barOneStyle.backgroundColor = color;
 				barTwoStyle.backgroundColor = color;
 			}, i * sortingSpeed);
 		} else {
 			setTimeout(() => {
+				if (animationArray[i][0].valueOf() === "finishedSorting") {
+					sortingAlgorithmVisualizer.resetIsRunning();
+					return;
+				}
 				const [barOneIndex, newHeight] = animationArray[i];
 				const barOneStyle = arrayBars[barOneIndex].style;
 				barOneStyle.height = `${newHeight}px`;
@@ -71,6 +82,7 @@ export function selectionSort(array, sortingSpeed) {
 					for (let j = 0; j < arrayBars.length; j++) {
 						arrayBars[j].style.backgroundColor = 'turquoise';
 					}
+					sortingAlgorithmVisualizer.resetIsRunning();
 				}, 1000);
 			}
 		}, i * sortingSpeed);
@@ -116,6 +128,7 @@ export function insertionSort(array, sortingSpeed) {
 					for (let j = 0; j < arrayBars.length; j++) {
 						arrayBars[j].style.backgroundColor = 'turquoise';
 					}
+					sortingAlgorithmVisualizer.resetIsRunning();
 				}, 1000);
 			}
 		}, i * sortingSpeed);
@@ -177,6 +190,7 @@ export function quickSort(array, sortingSpeed) {
 					for (let j = 0; j < arrayBars.length; j++) {
 						arrayBars[j].style.backgroundColor = 'turquoise';
 					}
+					sortingAlgorithmVisualizer.resetIsRunning();
 				}, 1000);
 			}
 			pivotBar.style.backgroundColor = 'green';

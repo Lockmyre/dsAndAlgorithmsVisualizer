@@ -5,6 +5,11 @@ import * as sortingVisualizers from '../sortingAlgorithms/sortingAlgorithmVisual
 
 var currentButton = null;
 
+export function resetIsRunning() {
+	document.getElementById("changeSize").disabled = null;
+	document.getElementById("changeSpeed").disabled = null;
+}
+
 export default class SortingAlgorithmVisualizer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -32,6 +37,8 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 	}
 
 	handleSortClick = () => {
+		document.getElementById("changeSize").disabled = "disabled";
+		document.getElementById("changeSpeed").disabled = "disabled";
 		if(currentButton != null) {
 			switch(currentButton.props.value) {
 				case("Selection Sort"):
@@ -52,6 +59,9 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 		}
 	}
 
+	handleStopClick = () => {
+		window.location.reload();
+	}
 	handleSizeChange = (evt) => {
 		let newLen = evt.target.value;
 		this.resetSortingArray(newLen);
@@ -71,6 +81,7 @@ export default class SortingAlgorithmVisualizer extends React.Component {
 		return (
 			<body>
 				<SortingAlgorithmHeader 
+					handleStopClick={this.handleStopClick}
 					handleSizeChange={this.handleSizeChange}
 					handleSpeedChange={this.handleSpeedChange}
 					sortingArray={this.state.sortingArray}
@@ -122,7 +133,7 @@ class SortButton extends React.Component {
 			<button 
 			className="sortButton"
 			onClick={this.props.handleSortClick}>
-			Click to sort 
+			Click to sort
 			</button>
 		);
 	}
@@ -184,6 +195,11 @@ class SortingAlgorithmHeader extends React.Component {
 					<SortButton
 						handleSortClick={this.props.handleSortClick}
 					/>
+					<button
+						id="stopButton"
+						onClick={this.props.handleStopClick}>
+						Stop sorting
+					</button>
 				</div>
 			</div>
 		);
