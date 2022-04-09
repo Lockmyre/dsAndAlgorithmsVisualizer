@@ -8,6 +8,7 @@
 }
 
 #arraySize {
+    font-size: 14px;
     margin-right: 0.3%;
 }
 
@@ -17,6 +18,7 @@
 }
 
 #sortingSpeed {
+    font-size: 14px;
     margin-right: 0.3%;
 }
 
@@ -26,10 +28,10 @@
 
 .currentSortingAlgorithmButton {
     transition: 0.3s;
-    font-size: 21px;
+    font-size: 13px;
     color: white;
-    height: 50px;
-    width: 150px;
+    height: 35px;
+    width: 100px;
     background-color: #2196F3;
     border-radius: 5px;
     border-width: 2px;
@@ -40,10 +42,10 @@
 
 .sortingAlgorithmButton {
     transition: 0.3s;
-    font-size: 21px;
+    font-size: 13px;
     color: #2196F3;
-    height: 50px;
-    width: 150px;
+    height: 35px;
+    width: 100px;
     background-color: white;
     border-radius: 5px;
     border-width: 2px;
@@ -55,10 +57,6 @@
 .sortingAlgorithmButton:hover {
     color: white;
     background-color: #2196F3;
-}
-
-.sortingButtonContainer {
-    margin-left: 20%;
 }
 
 .separator {
@@ -157,14 +155,14 @@
  color: #FFFFFF;
  cursor: pointer;
  display: inline-block;
- font-size: 15px;
- font-weight: 700;
+ font-size: 14px;
+ font-weight: 600;
  letter-spacing: .8px;
  line-height: 20px;
  margin: 0;
  outline: none;
  overflow: visible;
- padding: 13px 19px;
+ padding: 10px 15px;
  text-align: center;
  text-transform: uppercase;
  touch-action: manipulation;
